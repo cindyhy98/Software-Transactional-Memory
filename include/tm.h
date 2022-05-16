@@ -29,6 +29,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
+
 // -------------------------------------------------------------------------- //
 
 typedef void* shared_t; // The type of a shared memory region
@@ -49,6 +50,7 @@ static alloc_t const nomem_alloc   = 2; // Memory allocation failed but TX was n
 // -------------------------------------------------------------------------- //
 
 shared_t tm_create(size_t, size_t);
+struct segment* allocate_segment(size_t, size_t);
 void     tm_destroy(shared_t);
 void*    tm_start(shared_t);
 size_t   tm_size(shared_t);
@@ -57,5 +59,6 @@ tx_t     tm_begin(shared_t, bool);
 bool     tm_end(shared_t, tx_t);
 bool     tm_read(shared_t, tx_t, void const*, size_t, void*);
 bool     tm_write(shared_t, tx_t, void const*, size_t, void*);
+void     commit(tx_t);
 alloc_t  tm_alloc(shared_t, tx_t, size_t, void**);
 bool     tm_free(shared_t, tx_t, void*);
